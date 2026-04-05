@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List
 from datetime import date, timedelta
 
 @dataclass
@@ -11,8 +11,23 @@ class Task:
     due_date: date = field(default_factory=date.today)
 
     def mark_complete(self):
-        """Mark the task as complete."""
+        """Mark the task as complete and return next task if recurring."""
         self.is_complete = True
+        if self.frequency == "daily":
+            return Task(
+                description=self.description,
+                time=self.time,
+                frequency=self.frequency,
+                due_date=self.due_date + timedelta(days=1)
+            )
+        elif self.frequency == "weekly":
+            return Task(
+                description=self.description,
+                time=self.time,
+                frequency=self.frequency,
+                due_date=self.due_date + timedelta(weeks=1)
+            )
+        return None
 
 @dataclass
 class Pet:
@@ -39,7 +54,7 @@ class Owner:
         self.pets.append(pet)
 
     def get_all_tasks(self):
-        """Return all tasks across all pets as a list of (pet, task) tuples."""
+        """Return all tasks across all pets as (pet, task) tuples."""
         all_tasks = []
         for pet in self.pets:
             for task in pet.get_tasks():
@@ -54,11 +69,8 @@ class Scheduler:
     def get_todays_tasks(self):
         """Return all tasks due today."""
         today = date.today()
-        todays = []
-        for pet, task in self.owner.get_all_tasks():
-            if task.due_date == today:
-                todays.append((pet, task))
-        return todays
+        return [(pet, task) for pet, task in self.owner.get_all_tasks()
+                if task.due_date == today]
 
     def sort_by_time(self, tasks=None):
         """Sort tasks by their time attribute in HH:MM format."""
@@ -74,6 +86,18 @@ class Scheduler:
         if completed is not None:
             tasks = [(p, t) for p, t in tasks if t.is_complete == completed]
         return tasks
+
+    def mark_task_complete(self, pet_name: str, task_description: str):
+        """Mark a task complete and auto-schedule next if recurring."""
+        for pet in self.owner.pets:
+            if pet.name == pet_name:
+                for task in pet.get_tasks():
+                    if task.description == task_description and not task.is_complete:
+                        next_task = task.mark_complete()
+                        if next_task:
+                            pet.add_task(next_task)
+                        return True
+        return False
 
     def detect_conflicts(self):
         """Detect tasks scheduled at the same time for the same pet."""

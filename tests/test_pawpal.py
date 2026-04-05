@@ -1,9 +1,9 @@
 from pawpal_system import Task, Pet, Owner, Scheduler
-from datetime import date
+from datetime import date, timedelta
 
 # Test 1: Mark complete changes status
 def test_mark_complete():
-    task = Task(description="Walk", time="08:00", frequency="daily")
+    task = Task(description="Walk", time="08:00", frequency="once")
     task.mark_complete()
     assert task.is_complete == True
 
@@ -35,3 +35,27 @@ def test_detect_conflicts():
     scheduler = Scheduler(owner)
     conflicts = scheduler.detect_conflicts()
     assert len(conflicts) > 0
+
+# Test 5: Daily recurring task creates next day task
+def test_recurring_daily_task():
+    owner = Owner(name="Harshini")
+    pet = Pet(name="Bruno", species="Dog", age=3)
+    today = date.today()
+    pet.add_task(Task(description="Walk", time="07:00", 
+                      frequency="daily", due_date=today))
+    owner.add_pet(pet)
+    scheduler = Scheduler(owner)
+    scheduler.mark_task_complete("Bruno", "Walk")
+    dates = [t.due_date for t in pet.get_tasks()]
+    assert today + timedelta(days=1) in dates
+
+# Test 6: No conflict when times are different
+def test_no_conflict():
+    owner = Owner(name="Harshini")
+    pet = Pet(name="Bruno", species="Dog", age=3)
+    pet.add_task(Task(description="Walk", time="07:00", frequency="daily"))
+    pet.add_task(Task(description="Feeding", time="08:00", frequency="daily"))
+    owner.add_pet(pet)
+    scheduler = Scheduler(owner)
+    conflicts = scheduler.detect_conflicts()
+    assert len(conflicts) == 0
