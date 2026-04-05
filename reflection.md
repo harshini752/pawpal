@@ -41,11 +41,20 @@ clean and modular.
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
+The scheduler considers time as the main constraint, 
+sorting all tasks chronologically using HH:MM format. 
+Time was prioritized because pet care tasks like feeding 
+and medication are time-sensitive.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
+The conflict detection only checks for exact time matches, 
+not overlapping durations. For example, a 30-minute walk 
+starting at 08:00 and a task at 08:15 would not be flagged. 
+This is reasonable for a simple scheduler but would need 
+duration tracking in a more advanced version.
 
 ---
 
@@ -67,26 +76,26 @@ clean and modular.
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
-I tested 4 behaviors:
+I tested 6 behaviors:
 - mark_complete() correctly changes task status to True
 - Adding a task to a Pet increases its task count
 - sort_by_time() returns tasks in chronological order
-- detect_conflicts() correctly flags two tasks at the same time
+- detect_conflicts() correctly flags two tasks at same time
+- Daily recurring tasks auto-schedule for the next day
+- No false conflict warnings when times are different
 
 These tests are important because they verify the core 
-logic that the entire app depends on.
+logic the entire app depends on.
 
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
 - What edge cases would you test next if you had more time?
 
-Confidence: (4/5)
-The core logic works well for the tested cases. Edge cases 
-like empty pet lists or invalid time formats would be good 
-to test next.
+Confidence:(4/5)
+All 6 tests pass. The system handles happy paths and key 
+edge cases well. Next I would test empty pet lists, invalid 
+time formats like "25:00", and weekly recurring tasks.
 
 ---
 
