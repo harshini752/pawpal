@@ -5,7 +5,13 @@
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+1. Add a pet to the system
+2. Schedule a task ( feeding, walk, medication) for a pet
+3. View all tasks scheduled for today 
 - What classes did you include, and what responsibilities did you assign to each?
+I designed 4 classes: Task (holds activity details), 
+Pet (holds pet info and tasks), Owner (manages multiple pets), 
+and Scheduler (sorts and organizes all tasks).
 
 **b. Design changes**
 
