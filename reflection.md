@@ -64,11 +64,20 @@ duration tracking in a more advanced version.
 
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
 - What kinds of prompts or questions were most helpful?
+I used AI to help generate class skeletons from my UML 
+design, scaffold the full implementation, suggest test 
+cases, and debug logic. The most helpful prompts were 
+specific ones like "generate a conflict detection method 
+that returns warnings instead of crashing."
 
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
 - How did you evaluate or verify what the AI suggested?
+When AI suggested combining Owner and Scheduler into one 
+class, I rejected it because keeping them separate follows 
+the Single Responsibility Principle and makes the code 
+easier to test and maintain.
 
 ---
 
@@ -104,11 +113,22 @@ time formats like "25:00", and weekly recurring tasks.
 **a. What went well**
 
 - What part of this project are you most satisfied with?
+I am most satisfied with the algorithmic layer — sorting, 
+conflict detection, and recurring tasks all work correctly 
+and are verified by automated tests.
 
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
+I would add duration to tasks so conflict detection can 
+catch overlapping time windows, not just exact matches. 
+I would also add data persistence so pets and tasks are 
+saved between sessions.
 
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+The most important thing I learned is that AI is a powerful 
+scaffold tool, but the human architect must make the final 
+design decisions. Keeping responsibilities separated across 
+classes made the system much easier to build, test, and extend.

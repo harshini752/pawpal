@@ -61,3 +61,6 @@ correctness, conflict detection, recurring logic, and
 no-conflict validation.
 
 Confidence level:  (4/5)
+
+## 📊 System Architecture
+![UML Diagram](uml_final.png)
