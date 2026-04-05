@@ -9,14 +9,29 @@
 2. Schedule a task ( feeding, walk, medication) for a pet
 3. View all tasks scheduled for today 
 - What classes did you include, and what responsibilities did you assign to each?
-I designed 4 classes: Task (holds activity details), 
-Pet (holds pet info and tasks), Owner (manages multiple pets), 
-and Scheduler (sorts and organizes all tasks).
+I designed 4 classes:
+
+- Task: holds activity details like description, time, 
+  frequency, and completion status. Uses Python dataclass 
+  for clean structure.
+
+- Pet: holds pet info (name, species, age) and owns a 
+  list of Task objects. Can add and retrieve tasks.
+
+- Owner: manages multiple Pet objects and can retrieve 
+  all tasks across all pets.
+
+- Scheduler: the "brain" that takes an Owner and handles 
+  sorting, filtering, and conflict detection of tasks.
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+No major changes yet. The initial design matches the UML 
+diagram closely. The Scheduler was kept as a separate class 
+rather than combining it with Owner to keep responsibilities 
+clean and modular.
 
 ---
 
