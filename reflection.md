@@ -69,11 +69,24 @@ clean and modular.
 
 - What behaviors did you test?
 - Why were these tests important?
+I tested 4 behaviors:
+- mark_complete() correctly changes task status to True
+- Adding a task to a Pet increases its task count
+- sort_by_time() returns tasks in chronological order
+- detect_conflicts() correctly flags two tasks at the same time
+
+These tests are important because they verify the core 
+logic that the entire app depends on.
 
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
 - What edge cases would you test next if you had more time?
+
+Confidence: (4/5)
+The core logic works well for the tested cases. Edge cases 
+like empty pet lists or invalid time formats would be good 
+to test next.
 
 ---
 
